@@ -35,11 +35,9 @@ For SmartComputer implementations, I had look at references for [minimax algorit
 
 Board stores all the use inputs, validates if the input is valid.
 Internally it stores a one dimensional array of `integer`.
-It also handles synchronization between concurrent requests using `mutexes`.
 
 ```go
 type Board struct {
-    mu    sync.RWMutex // mutex for synchronization
     moves int          // moves represents the total number of valid moves made on board
     size  int          // size of NxN matrix, represents N
     grid  []int        // one dimensional array representing NxN matrix
