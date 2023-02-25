@@ -16,8 +16,8 @@ type RandomComputer struct {
 	move player.Move
 }
 
-// NewRandomComputer returns a new RandomComputer
-func NewRandomComputer(move player.Move) *RandomComputer {
+// New returns a new RandomComputer
+func New(move player.Move) *RandomComputer {
 	rand.Seed(time.Now().UnixNano())
 	return &RandomComputer{
 		move: move,

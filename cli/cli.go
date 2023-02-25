@@ -9,8 +9,8 @@ import (
 	"github.com/dineshgowda24/tic-tac-toe/source/board"
 	"github.com/dineshgowda24/tic-tac-toe/source/game"
 	"github.com/dineshgowda24/tic-tac-toe/source/player"
-	"github.com/dineshgowda24/tic-tac-toe/source/player/human"
-	"github.com/dineshgowda24/tic-tac-toe/source/player/smart_computer"
+	player_factory "github.com/dineshgowda24/tic-tac-toe/source/player/factory"
+
 	"github.com/manifoldco/promptui"
 )
 
@@ -33,18 +33,18 @@ func Cli() {
 		// set up players
 		var playerOne, playerTwo player.Player
 		if gameType == "s" {
-			playerOne = smart_computer.NewSmartComputer(player.X)
+			playerOne = getPlayerByDifficulty()
 			fmt.Printf("%s will play with %s\n", playerOne.Name(), playerOne.Move().String())
 			name, _ := collectPlayerName()
-			playerTwo = human.NewHuman(player.O, name, os.Stdin)
+			playerTwo = player_factory.NewPlayer(player.Human, name, player.O, os.Stdin)
 			fmt.Printf("%s will play with %s\n", playerTwo.Name(), playerTwo.Move().String())
 
 		} else {
 			nameOne, _ := collectPlayerName()
-			playerOne = human.NewHuman(player.X, nameOne, os.Stdin)
+			playerOne = player_factory.NewPlayer(player.Human, nameOne, player.X, os.Stdin)
 			fmt.Printf("%s will play with %s\n", playerOne.Name(), player.X)
 			nameTwo, _ := collectPlayerName()
-			playerTwo = human.NewHuman(player.O, nameTwo, os.Stdin)
+			playerTwo = player_factory.NewPlayer(player.Human, nameTwo, player.O, os.Stdin)
 			fmt.Printf("%s will play with %s\n", playerTwo.Name(), playerTwo.Move().String())
 		}
 
@@ -101,17 +101,11 @@ func getGameType() (string, error) {
 		Items: []string{"Single", "MultiPlayer"},
 	}
 
-	_, gameType, err := gameTypePrompt.Run()
-
-	if err != nil {
-		fmt.Printf("Game type prompt failed %v\n", err)
-		return "", errors.New("game type prompt failed")
-	}
-
+	_, gameType, _ := gameTypePrompt.Run()
 	switch gameType {
 	case "Single":
 		return "s", nil
-	case "Multiplayer":
+	case "MultiPlayer":
 		return "m", nil
 	}
 	return "", errors.New("invalid game type")
@@ -145,7 +139,7 @@ func collectPlayerName() (string, error) {
 
 	if err != nil {
 		fmt.Printf("Name prompt failed %v\n", err)
-		return "", nil
+		return "", err
 	}
 
 	return result, nil
@@ -153,19 +147,51 @@ func collectPlayerName() (string, error) {
 
 // shouldContinuePlaying asks for consent to play again after game is finished
 func shouldContinuePlaying() bool {
-	fmt.Println("Do you want to play again?")
-	fmt.Println("Enter [Y]es or [N]o")
-	for {
-		var stillPlaying string
-		fmt.Scanf("%s", &stillPlaying)
-		stillPlaying = strings.ToLower(strings.TrimSpace(stillPlaying))
-		switch stillPlaying {
-		case "n":
-			return false
-		case "y":
-			return true
-		default:
-			fmt.Println("Hmm.. something doesn't look right, try again'")
-		}
+	playingPrompt := promptui.Select{
+		Label: "Play again",
+		Items: []string{"Yes", "No"},
 	}
+
+	_, result, _ := playingPrompt.Run()
+	fmt.Println(result)
+	switch result {
+	case "Yes":
+		return true
+	case "No":
+		return false
+	default:
+		return false
+	}
+}
+
+// getDifficultyLevel returns difficulty level from STDIN
+func getDifficultyLevel() string {
+	prompt := promptui.Select{
+		Label: "Select difficulty level",
+		Items: []string{"Beginner", "Expert"},
+	}
+
+	_, level, _ := prompt.Run()
+	switch level {
+	case "Beginner":
+		return "b"
+	case "Expert":
+		return "e"
+	default:
+		return ""
+	}
+}
+
+func getPlayerByDifficulty() player.Player {
+	level := getDifficultyLevel()
+	var playerOne player.Player
+	if level == "b" {
+		playerOne = player_factory.NewPlayer(player.RandomComputer, "", player.X, nil)
+	} else if level == "e" {
+		playerOne = player_factory.NewPlayer(player.SmartComputer, "", player.X, nil)
+	} else {
+		fmt.Print("difficulty level prompt failed")
+		os.Exit(1)
+	}
+	return playerOne
 }

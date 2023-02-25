@@ -20,8 +20,8 @@ type Human struct {
 	name   string
 }
 
-// NewHuman returns a new human
-func NewHuman(move player.Move, name string, stream io.ReadWriteCloser) *Human {
+// New returns a new human
+func New(move player.Move, name string, stream io.ReadWriteCloser) *Human {
 	return &Human{
 		move:   move,
 		stream: stream,

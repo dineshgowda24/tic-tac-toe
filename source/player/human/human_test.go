@@ -15,16 +15,16 @@ func (r *ReadWriteNopCloser) Close() error {
 	return nil
 }
 
-func TestNewHuman(t *testing.T) {
+func TestNew(t *testing.T) {
 
-	human := NewHuman(player.O, "Dinesh", &ReadWriteNopCloser{bytes.NewBuffer([]byte("Sample Input"))})
+	human := New(player.O, "Dinesh", &ReadWriteNopCloser{bytes.NewBuffer([]byte("Sample Input"))})
 	if human == nil {
 		t.Error("human can not be nil")
 	}
 }
 
 func TestHumanPlay(t *testing.T) {
-	human := NewHuman(player.O, "Dinesh", &ReadWriteNopCloser{bytes.NewBuffer([]byte("1\n2\n3\n"))})
+	human := New(player.O, "Dinesh", &ReadWriteNopCloser{bytes.NewBuffer([]byte("1\n2\n3\n"))})
 	if human == nil {
 		t.Error("human can not be nil")
 		t.FailNow()

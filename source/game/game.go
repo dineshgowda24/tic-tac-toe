@@ -7,6 +7,7 @@ import (
 
 	"github.com/dineshgowda24/tic-tac-toe/source/board"
 	"github.com/dineshgowda24/tic-tac-toe/source/player"
+	"github.com/fatih/color"
 )
 
 // Game represents the current context of a tic tac toe game
@@ -34,7 +35,7 @@ func (g *Game) String() string {
 	var rows []string
 	offset := 1
 	for i := 1; i <= size*size; i++ {
-		rows = append(rows, fmt.Sprintf("%s", player.Move(grid[i]).String()))
+		rows = append(rows, g.getGridIcon(grid, i))
 		offset++
 		if offset > size {
 			fmt.Fprintf(&buf, fmt.Sprintf("%s\n", strings.Join(rows, "|")))
@@ -43,6 +44,23 @@ func (g *Game) String() string {
 		}
 	}
 	return buf.String()
+}
+
+func (g *Game) getGridIcon(grid []int, idx int) string {
+	red := color.New(color.FgRed).SprintFunc()
+	green := color.New(color.FgGreen).SprintFunc()
+	cyan := color.New(color.FgCyan).SprintFunc()
+
+	var outputStr string
+	switch player.Move(grid[idx]) {
+	case player.NP:
+		outputStr = green(player.Move(grid[idx]).String())
+	case player.O:
+		outputStr = cyan(player.Move(grid[idx]).String())
+	case player.X:
+		outputStr = red(player.Move(grid[idx]).String())
+	}
+	return outputStr
 }
 
 type Status string
@@ -236,18 +254,15 @@ func (g *Game) checkDiagonal(grid []int) Status {
 // Its a blocking call, terminates when users wishes to not play any more
 // It switches between two players
 func (g *Game) Start() {
-	fmt.Println("Initializing Game, please wait...")
 	currentPlayer := g.playerOne
 	g.notifyPlayers("Initializing Game, please wait...\n")
 	g.printBoard()
 	for {
-		fmt.Println(fmt.Sprintf("%s enter your move", currentPlayer.Name()))
-		currentPlayer.Notify(fmt.Sprintf("%s enter your move", currentPlayer.Name()))
+		currentPlayer.Notify(fmt.Sprintf("%s enter your move\n", currentPlayer.Name()))
 		move := currentPlayer.Play(g.board)
 		err := g.board.Move(move, int(currentPlayer.Move()))
 		if err != nil {
-			fmt.Println(err.Error())
-			currentPlayer.Notify(err.Error())
+			currentPlayer.Notify(fmt.Sprintf("%v\n", err.Error()))
 
 			continue
 		}
@@ -272,9 +287,7 @@ func (g *Game) Start() {
 }
 
 func (g *Game) printBoard() {
-	brd := fmt.Sprintf("%s\n", g.String())
-	fmt.Println(brd)
-	g.notifyPlayers(brd)
+	g.notifyPlayers(fmt.Sprintf("%s\n", g.String()))
 }
 
 func (g *Game) notifyPlayers(data string) {
