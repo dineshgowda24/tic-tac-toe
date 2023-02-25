@@ -72,8 +72,40 @@ make build
 ./play
 ```
 
+### Playing over the network
+
+1. Start the server.
+
+```shell
+go run main.go server
+```
+
+2. Connect to the server.
+
+```shell
+nc 127.0.0.1 8080
+```
+
+It needs to players to connect, so run the `nc` command twice in different terminal session.
+
+### Running the cli
+
+```shell
+go run main.go cli
+```
+
 ## Demo
 
 ### Smart Computer
 
 <img src="smart_computer.svg"/>
+
+
+### Starting the server
+
+<img src="server_startup.svg"/>
+
+
+### Connecting to the server
+
+<img src="network_play.svg"/>
