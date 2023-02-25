@@ -26,7 +26,7 @@ func Cli() {
 		var playerOne, playerTwo player.Player
 		if gameType == "s" {
 			playerOne = getPlayerByDifficulty()
-			fmt.Println(color.BlackItalic(fmt.Sprintf("%s will play with %s", playerOne.Name(), playerOne.Move().String())))
+			fmt.Println(color.WhiteItalic(fmt.Sprintf("%s will play with %s", playerOne.Name(), playerOne.Move().String())))
 			playerTwo = getHumanPlayer(player.O)
 		} else {
 			playerOne = getHumanPlayer(player.X)
@@ -55,7 +55,7 @@ func Cli() {
 func getHumanPlayer(move player.Move) player.Player {
 	name, _ := getPlayerName()
 	plr := player_factory.NewPlayer(player.Human, name, move, os.Stdin)
-	fmt.Println(color.BlackItalic(fmt.Sprintf("%s will play with %s", plr.Name(), plr.Move().String())))
+	fmt.Println(color.WhiteItalic(fmt.Sprintf("%s will play with %s", plr.Name(), plr.Move().String())))
 	return plr
 }
 

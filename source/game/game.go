@@ -257,10 +257,10 @@ func (g *Game) checkDiagonal(grid []int) Status {
 // It switches between two players
 func (g *Game) Start() {
 	currentPlayer := g.playerOne
-	g.notifyPlayers(tcolor.BlackItalic("Initializing Game, please wait...\n"))
+	g.notifyPlayers(tcolor.WhiteItalic("Initializing Game, please wait...\n"))
 	g.printBoard()
 	for {
-		currentPlayer.Notify(tcolor.BlackItalic(fmt.Sprintf("%s enter your move\n", currentPlayer.Name())))
+		currentPlayer.Notify(tcolor.WhiteItalic(fmt.Sprintf("%s enter your move\n", currentPlayer.Name())))
 		move := currentPlayer.Play(g.board)
 		err := g.board.Move(move, int(currentPlayer.Move()))
 		if err != nil {

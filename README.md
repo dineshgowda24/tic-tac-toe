@@ -1,12 +1,13 @@
 # Tic Tac Toe
 
-## Assumption
+## Features
 
 - Game can be extended to NxN board
 - Game can be played by 2 players:
     1. Human vs Dumb Computer
     2. Human vs Human
     3. Human vs Smart Computer
+- Game can be played over the network.
 
 
 ## Components
