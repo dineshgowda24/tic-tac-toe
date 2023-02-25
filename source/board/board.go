@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"strings"
-	"sync"
 )
 
 const (
@@ -24,10 +23,9 @@ var (
 // Board has context of the grid in tic tac toe
 // 0 index is ignored and not used for simplicity and from player stand point
 type Board struct {
-	mu    sync.RWMutex // mutex for synchronization
-	moves int          // moves represents the total number of valid moves made on board
-	size  int          // size of NxN matrix, represents N
-	grid  []int        // one dimensional array representing NxN matrix
+	moves int   // moves represents the total number of valid moves made on board
+	size  int   // size of NxN matrix, represents N
+	grid  []int // one dimensional array representing NxN matrix
 }
 
 // NewBoard returns a new Board
@@ -38,44 +36,32 @@ func NewBoard(size int) (*Board, error) {
 	}
 	return &Board{
 		size: size,
-		grid: make([]int, (size*size)+1, (size*size)+1),
+		grid: make([]int, (size*size)+1),
 	}, nil
 }
 
 // Grid returns a copy of the grid at the time
 // The actual grid is not shared since it can be modified
 func (b *Board) Grid() []int {
-	b.mu.RLock()
-	defer b.mu.RUnlock()
-
-	grid := make([]int, (b.size*b.size)+1, (b.size*b.size)+1)
+	grid := make([]int, (b.size*b.size)+1)
 	copy(grid, b.grid)
 	return grid
 }
 
 func (b *Board) DeepCopy() *Board {
-	b.mu.RLock()
-	defer b.mu.RUnlock()
-
-	grid := make([]int, (b.size*b.size)+1, (b.size*b.size)+1)
+	grid := make([]int, (b.size*b.size)+1)
 	copy(grid, b.grid)
-	return &Board{grid: grid, size: b.size, mu: sync.RWMutex{}}
+	return &Board{grid: grid, size: b.size}
 }
 
 // GridRef returns a reference to the actual grid
 // The actual grid is not shared since it can be modified
 func (b *Board) GridRef() []int {
-	b.mu.RLock()
-	defer b.mu.RUnlock()
-
 	return b.grid[:]
 }
 
 // Size returns the size of the matrix
 func (b *Board) Size() int {
-	b.mu.RLock()
-	defer b.mu.RUnlock()
-
 	return b.size
 }
 
@@ -87,8 +73,6 @@ func (b *Board) Move(cell int, value int) error {
 		return err
 	}
 
-	b.mu.Lock()
-	defer b.mu.Unlock()
 	b.grid[cell] = value
 	b.moves++
 	return nil
@@ -99,8 +83,6 @@ func (b *Board) Reset(cell int) error {
 		return ErrMoveOutOfBound
 	}
 
-	b.mu.Lock()
-	defer b.mu.Unlock()
 	b.grid[cell] = 0
 	b.moves--
 	return nil
@@ -125,18 +107,10 @@ func (b *Board) validMove(index int) (bool, error) {
 
 // HasEmptyCells returns true if there are any empty indexes in the matrix
 func (b *Board) HasEmptyCells() bool {
-	b.mu.RLock()
-	defer b.mu.RUnlock()
-
-	if b.moves < b.size*b.size {
-		return true
-	}
-	return false
+	return b.moves < b.size*b.size
 }
 
 func (b *Board) String() string {
-	b.mu.RLock()
-	defer b.mu.RUnlock()
 	var buf bytes.Buffer
 	var rows []string
 	offset := 1
