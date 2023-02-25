@@ -161,7 +161,7 @@ func getPlayerByDifficulty() player.Player {
 	case "b":
 		return player_factory.NewPlayer(player.RandomComputer, "", player.X, nil)
 	case "e":
-		return player_factory.NewPlayer(player.RandomComputer, "", player.X, nil)
+		return player_factory.NewPlayer(player.SmartComputer, "", player.X, nil)
 	default:
 		return player_factory.NewPlayer(player.RandomComputer, "", player.X, nil)
 	}

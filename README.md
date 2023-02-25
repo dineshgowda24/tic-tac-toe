@@ -70,3 +70,9 @@ Once `Go` is installed run the below command
 make build
 ./play
 ```
+
+## Demo
+
+### Smart Computer
+
+<img src="smart_computer.gif" height="400" />
