@@ -75,4 +75,4 @@ make build
 
 ### Smart Computer
 
-<img src="smart_computer.gif"/>
+<img src="smart_computer.svg"/>
