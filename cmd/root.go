@@ -25,7 +25,7 @@ var serverCmd = &cobra.Command{
 Default port will be 8080.`,
 	Aliases: []string{"serve"},
 	Run: func(cmd *cobra.Command, args []string) {
-		srv := server.NewServer()
+		srv := server.New()
 		srv.Serve()
 	},
 }

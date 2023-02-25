@@ -10,13 +10,16 @@ import (
 	"github.com/dineshgowda24/tic-tac-toe/source/game"
 	"github.com/dineshgowda24/tic-tac-toe/source/player"
 	player_factory "github.com/dineshgowda24/tic-tac-toe/source/player/factory"
+	"github.com/fatih/color"
 
 	"github.com/manifoldco/promptui"
 )
 
+var green func(a ...interface{}) string = color.New(color.FgGreen).Add(color.BgBlack).Add(color.Bold).SprintFunc()
+
 func Cli() {
 	for {
-		fmt.Println("Welcome to Tic Tac Toe XOXO!")
+		fmt.Println(green("Welcome to Tic Tac Toe XOXO!"))
 
 		size, err := getBoardSize()
 		if err != nil {
@@ -70,7 +73,7 @@ func Cli() {
 // getBoardSize returns size from STDIN
 func getBoardSize() (int, error) {
 	boardPrompt := promptui.Select{
-		Label: "Select board size",
+		Label: green("Select board size"),
 		Items: []string{"3x3", "4x4", "5x5"},
 	}
 
@@ -80,8 +83,6 @@ func getBoardSize() (int, error) {
 		fmt.Printf("board prompt failed %v\n", err)
 		return -1, errors.New("board prompt failed")
 	}
-
-	fmt.Printf("You choose %q\n", boardSize)
 
 	switch boardSize {
 	case "3x3":
@@ -97,7 +98,7 @@ func getBoardSize() (int, error) {
 // collectGameType returns game type from STDIN
 func getGameType() (string, error) {
 	gameTypePrompt := promptui.Select{
-		Label: "Select game type",
+		Label: green("Select game type"),
 		Items: []string{"Single", "MultiPlayer"},
 	}
 
@@ -148,7 +149,7 @@ func collectPlayerName() (string, error) {
 // shouldContinuePlaying asks for consent to play again after game is finished
 func shouldContinuePlaying() bool {
 	playingPrompt := promptui.Select{
-		Label: "Play again",
+		Label: green("Play again"),
 		Items: []string{"Yes", "No"},
 	}
 
@@ -167,7 +168,7 @@ func shouldContinuePlaying() bool {
 // getDifficultyLevel returns difficulty level from STDIN
 func getDifficultyLevel() string {
 	prompt := promptui.Select{
-		Label: "Select difficulty level",
+		Label: green("Select difficulty level"),
 		Items: []string{"Beginner", "Expert"},
 	}
 

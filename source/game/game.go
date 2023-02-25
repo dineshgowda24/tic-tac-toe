@@ -7,6 +7,7 @@ import (
 
 	"github.com/dineshgowda24/tic-tac-toe/source/board"
 	"github.com/dineshgowda24/tic-tac-toe/source/player"
+
 	"github.com/fatih/color"
 )
 
