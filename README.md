@@ -17,8 +17,10 @@
 ```go
 type Player interface {
     Play(*board.Board) int
+    Notify(data string) error
     Move() Move
     Name() string
+    Exit() error
 }
 ```
 
