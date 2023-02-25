@@ -7,9 +7,9 @@ import (
 	player2 "github.com/dineshgowda24/tic-tac-toe/source/player"
 )
 
-func TestNewRandomComputer(t *testing.T) {
+func TestNew(t *testing.T) {
 	var player player2.Player
-	player = NewRandomComputer(player2.X)
+	player = New(player2.X)
 	if player == nil {
 		t.Error("human can not be nil")
 	}
@@ -19,7 +19,7 @@ func TestRandomComputerPlay(t *testing.T) {
 	tests := []int{3, 4, 5, 6}
 	for _, size := range tests {
 		var player player2.Player
-		player = NewRandomComputer(player2.X)
+		player = New(player2.X)
 		if player == nil {
 			t.Error("human can not be nil")
 			t.FailNow()

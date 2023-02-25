@@ -59,3 +59,12 @@ func NewMove(move string) Move {
 		panic("this should never happen")
 	}
 }
+
+// Type represents the type of a player
+type Type int
+
+var (
+	Human          Type = 1
+	SmartComputer  Type = 2
+	RandomComputer Type = 3
+)

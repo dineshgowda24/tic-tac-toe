@@ -15,7 +15,7 @@ type Server struct {
 	queue chan *PlayerMeta
 }
 
-func NewServer() *Server {
+func New() *Server {
 	return &Server{
 		queue: make(chan *PlayerMeta, 1),
 	}
@@ -31,7 +31,7 @@ func (s *Server) Serve() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Server started")
+	log.Println("Server started and listening on 8080")
 	go s.consume()
 	for {
 		conn, err := listener.Accept()
@@ -71,14 +71,15 @@ func (s *Server) consume() {
 	var players []player.Player
 	for meta := range s.queue {
 		if len(players) == 0 {
-			playerOne := human.NewHuman(player.X, meta.name, meta.conn)
+			playerOne := human.New(player.X, meta.name, meta.conn)
 			players = append(players, playerOne)
 			continue
 		}
-		playerTwo := human.NewHuman(player.O, meta.name, meta.conn)
+		playerTwo := human.New(player.O, meta.name, meta.conn)
 		brd, _ := board.NewBoard(3)
 		gm := game.NewGame(brd, players[0], playerTwo)
 		go gm.Start()
+
 		players = []player.Player{}
 	}
 }

@@ -20,8 +20,8 @@ type Human struct {
 	name   string
 }
 
-// NewHuman returns a new human
-func NewHuman(move player.Move, name string, stream io.ReadWriteCloser) *Human {
+// New returns a new human
+func New(move player.Move, name string, stream io.ReadWriteCloser) *Human {
 	return &Human{
 		move:   move,
 		stream: stream,
@@ -47,9 +47,7 @@ func (h *Human) Play(grid *board.Board) int {
 			fmt.Println("unable to read input, try again")
 			continue
 		}
-		fmt.Printf("%#v\n", input)
 		input = strings.Replace(strings.Replace(input, "\r", "", -1), "\n", "", -1)
-		fmt.Printf("%#v\n", input)
 		index, err := strconv.Atoi(input)
 		if err != nil {
 			fmt.Println("invalid input")

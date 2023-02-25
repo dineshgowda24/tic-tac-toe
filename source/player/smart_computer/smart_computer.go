@@ -1,6 +1,8 @@
 package smart_computer
 
 import (
+	"fmt"
+
 	"github.com/dineshgowda24/tic-tac-toe/source/board"
 	"github.com/dineshgowda24/tic-tac-toe/source/game"
 	"github.com/dineshgowda24/tic-tac-toe/source/player"
@@ -11,8 +13,8 @@ type SmartComputer struct {
 	move player.Move
 }
 
-// NewSmartComputer returns a new SmartComputer
-func NewSmartComputer(move player.Move) *SmartComputer {
+// New returns a new SmartComputer
+func New(move player.Move) *SmartComputer {
 	return &SmartComputer{
 		move: move,
 	}
@@ -30,12 +32,13 @@ func (r *SmartComputer) Name() string {
 
 // Play returns a random number with the board range
 func (r *SmartComputer) Play(grid *board.Board) int {
+	fmt.Printf("%s is making a move..\n", r.Name())
 	return r.bestMove(grid)
 }
 
 // computes the optimal move for computer to win
 func (r *SmartComputer) minimax(brd *board.Board, depth int, isMe bool) int {
-	gm := game.NewGame(brd, r, radom_computer.NewRandomComputer(player.O))
+	gm := game.NewGame(brd, r, radom_computer.New(player.O))
 	switch gm.Status() {
 	case game.XPlayerWon:
 		return int(player.X)

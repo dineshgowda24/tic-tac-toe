@@ -4,9 +4,9 @@
 
 - Game can be extended to NxN board
 - Game can be played by 2 players:
-    - Human vs Dumb Computer
-    - Human vs Human
-    - Human vs Smart Computer
+    1. Human vs Dumb Computer
+    2. Human vs Human
+    3. Human vs Smart Computer
 
 
 ## Components
@@ -15,9 +15,9 @@
 
 ```go
 type Player interface {
-	Play(*board.Board) int
-	Move() Move
-	Name() string
+    Play(*board.Board) int
+    Move() Move
+    Name() string
 }
 ```
 
@@ -28,10 +28,7 @@ Player is an interface who can play.
     2. `RandomComputer` - Generates a random input.
     3. `SmartComputer` - Generates input based on context of the game. It Makes decisions to win
 
-For SmartComputer implementations, I had look at references about minimax algorithms
-References I looked out
-
- - https://www.youtube.com/watch?v=trKjYdBASyQ&t=772s&ab_channel=TheCodingTrain
+For SmartComputer implementations, I had look at references for [minimax algorithms](https://www.youtube.com/watch?v=trKjYdBASyQ&t=772s&ab_channel=TheCodingTrain)
 
 ### Board
 
@@ -41,10 +38,10 @@ It also handles synchronization between concurrent requests using `mutexes`.
 
 ```go
 type Board struct {
-	mu    sync.RWMutex // mutex for synchronization
-	moves int          // moves represents the total number of valid moves made on board
-	size  int          // size of NxN matrix, represents N
-	grid  []int        // one dimensional array representing NxN matrix
+    mu    sync.RWMutex // mutex for synchronization
+    moves int          // moves represents the total number of valid moves made on board
+    size  int          // size of NxN matrix, represents N
+    grid  []int        // one dimensional array representing NxN matrix
 }
 ```
 
@@ -55,9 +52,9 @@ It validates when the game is completed and returns.
 
 ```go
 type Game struct {
-	board     *board.Board // tic tak toe board
-	playerOne player.Player
-	playerTwo player.Player
+    board     *board.Board // tic tak toe board
+    playerOne player.Player
+    playerTwo player.Player
 }
 ```
 

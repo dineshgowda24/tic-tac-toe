@@ -71,7 +71,7 @@ func TestPrintGameBoard4X4(t *testing.T) {
 func TestVerticalResult3x3(t *testing.T) {
 	const boardSize = 3
 	brd, _ := board.NewBoard(boardSize)
-	gm := NewGame(brd, radom_computer.NewRandomComputer(player.X), radom_computer.NewRandomComputer(player.O))
+	gm := NewGame(brd, radom_computer.New(player.X), radom_computer.New(player.O))
 	if gm.checkVertical(brd.Grid()) != InProgress {
 		t.Errorf("expected %v but got %v", InProgress, gm.Status())
 		t.FailNow()
@@ -103,7 +103,7 @@ func TestVerticalResult3x3(t *testing.T) {
 func TestVerticalResult4x4(t *testing.T) {
 	const boardSize = 4
 	brd, _ := board.NewBoard(boardSize)
-	gm := NewGame(brd, radom_computer.NewRandomComputer(player.X), radom_computer.NewRandomComputer(player.O))
+	gm := NewGame(brd, radom_computer.New(player.X), radom_computer.New(player.O))
 	if gm.checkVertical(brd.Grid()) != InProgress {
 		t.Errorf("expected %v but got %v", InProgress, gm.Status())
 		t.FailNow()
@@ -136,7 +136,7 @@ func TestVerticalResult4x4(t *testing.T) {
 func TestHorizontalResult3x3(t *testing.T) {
 	const boardSize = 3
 	brd, _ := board.NewBoard(boardSize)
-	gm := NewGame(brd, radom_computer.NewRandomComputer(player.X), radom_computer.NewRandomComputer(player.O))
+	gm := NewGame(brd, radom_computer.New(player.X), radom_computer.New(player.O))
 	if gm.checkHorizontal(brd.Grid()) != InProgress {
 		t.Errorf("expected %v but got %v", InProgress, gm.Status())
 		t.FailNow()
@@ -168,7 +168,7 @@ func TestHorizontalResult3x3(t *testing.T) {
 func TestHorizontalResult4x4(t *testing.T) {
 	const boardSize = 4
 	brd, _ := board.NewBoard(boardSize)
-	gm := NewGame(brd, radom_computer.NewRandomComputer(player.X), radom_computer.NewRandomComputer(player.O))
+	gm := NewGame(brd, radom_computer.New(player.X), radom_computer.New(player.O))
 	if gm.checkHorizontal(brd.Grid()) != InProgress {
 		t.Errorf("expected %v but got %v", InProgress, gm.Status())
 		t.FailNow()
@@ -201,7 +201,7 @@ func TestHorizontalResult4x4(t *testing.T) {
 func TestDiagonalResult3x3(t *testing.T) {
 	const boardSize = 3
 	brd, _ := board.NewBoard(boardSize)
-	gm := NewGame(brd, radom_computer.NewRandomComputer(player.X), radom_computer.NewRandomComputer(player.O))
+	gm := NewGame(brd, radom_computer.New(player.X), radom_computer.New(player.O))
 	if gm.checkHorizontal(brd.Grid()) != InProgress {
 		t.Errorf("expected %v but got %v", InProgress, gm.Status())
 		t.FailNow()
@@ -232,7 +232,7 @@ func TestDiagonalResult3x3(t *testing.T) {
 func TestDiagonalResult4x4(t *testing.T) {
 	const boardSize = 4
 	brd, _ := board.NewBoard(boardSize)
-	gm := NewGame(brd, radom_computer.NewRandomComputer(player.X), radom_computer.NewRandomComputer(player.O))
+	gm := NewGame(brd, radom_computer.New(player.X), radom_computer.New(player.O))
 	if gm.checkHorizontal(brd.Grid()) != InProgress {
 		t.Errorf("expected %v but got %v", InProgress, gm.Status())
 		t.FailNow()

@@ -1,6 +1,7 @@
 package radom_computer
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -16,8 +17,8 @@ type RandomComputer struct {
 	move player.Move
 }
 
-// NewRandomComputer returns a new RandomComputer
-func NewRandomComputer(move player.Move) *RandomComputer {
+// New returns a new RandomComputer
+func New(move player.Move) *RandomComputer {
 	rand.Seed(time.Now().UnixNano())
 	return &RandomComputer{
 		move: move,
@@ -36,6 +37,7 @@ func (r *RandomComputer) Name() string {
 
 // Play returns a random number with the board range
 func (r *RandomComputer) Play(grid *board.Board) int {
+	fmt.Printf("%s is making a move..\n", r.Name())
 	time.Sleep(time.Second * 1) // Simulate time delay
 	return rand.Intn((grid.Size()*grid.Size())-1) + 1
 }
