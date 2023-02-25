@@ -9,6 +9,7 @@ import (
 	"github.com/dineshgowda24/tic-tac-toe/source/player/smart_computer"
 )
 
+// NewPlayer is a factory method that returns a new player
 func NewPlayer(playerType player.Type, name string, mv player.Move, stream io.ReadWriteCloser) player.Player {
 	switch playerType {
 	case player.Human:

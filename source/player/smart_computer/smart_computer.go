@@ -32,7 +32,7 @@ func (r *SmartComputer) Name() string {
 
 // Play returns a random number with the board range
 func (r *SmartComputer) Play(grid *board.Board) int {
-	fmt.Println(fmt.Sprintf("%s making a move", r.Name()))
+	fmt.Printf("%s is making a move..\n", r.Name())
 	return r.bestMove(grid)
 }
 

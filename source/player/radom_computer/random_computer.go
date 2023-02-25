@@ -1,6 +1,7 @@
 package radom_computer
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -36,6 +37,7 @@ func (r *RandomComputer) Name() string {
 
 // Play returns a random number with the board range
 func (r *RandomComputer) Play(grid *board.Board) int {
+	fmt.Printf("%s is making a move..\n", r.Name())
 	time.Sleep(time.Second * 1) // Simulate time delay
 	return rand.Intn((grid.Size()*grid.Size())-1) + 1
 }

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/dineshgowda24/tic-tac-toe/source/board"
+	tcolor "github.com/dineshgowda24/tic-tac-toe/source/color"
 	"github.com/dineshgowda24/tic-tac-toe/source/player"
 
 	"github.com/fatih/color"
@@ -256,10 +257,10 @@ func (g *Game) checkDiagonal(grid []int) Status {
 // It switches between two players
 func (g *Game) Start() {
 	currentPlayer := g.playerOne
-	g.notifyPlayers("Initializing Game, please wait...\n")
+	g.notifyPlayers(tcolor.BlackItalic("Initializing Game, please wait...\n"))
 	g.printBoard()
 	for {
-		currentPlayer.Notify(fmt.Sprintf("%s enter your move\n", currentPlayer.Name()))
+		currentPlayer.Notify(tcolor.BlackItalic(fmt.Sprintf("%s enter your move\n", currentPlayer.Name())))
 		move := currentPlayer.Play(g.board)
 		err := g.board.Move(move, int(currentPlayer.Move()))
 		if err != nil {
@@ -273,7 +274,7 @@ func (g *Game) Start() {
 		switch g.Status() {
 		case XPlayerWon, OPlayerWon, Draw:
 			fmt.Println(g.Status())
-			g.notifyPlayers(fmt.Sprintf("%s", g.Status()))
+			g.notifyPlayers(tcolor.Green(fmt.Sprintf("%s", g.Status())))
 			g.finish()
 			return
 		}
